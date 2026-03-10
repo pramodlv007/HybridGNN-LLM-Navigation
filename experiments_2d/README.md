@@ -71,25 +71,35 @@ The **Hybrid GNN+LLM** framework uses a **Sample-Filter-Select** pipeline:
 - **Goal**: Navigate from corner to corner
 - **Run**: `python run_gnn_llm_hybrid.py`
 
+<video src="videos/hybrid_gnn_llm_mixed_obstacle.mp4" controls width="600"></video>
+
 ### 2. No-Fly Zone (NFZ)
 - **Arena**: L-shaped NFZ blocking the direct diagonal path + 25 obstacles
 - **Goal**: Navigate around NFZ without entering it
 - **Run**: `python nfz_experiment.py --method HYBRID`
+
+<video src="videos/nfz_hybrid.mp4" controls width="600"></video>
 
 ### 3. Medium NFZ (Dual Zones)
 - **Arena**: Center NFZ `[-1.2, 1.2]²` + Top-right NFZ `[2.2, 3.2]²` + 25 obstacles
 - **Goal**: Navigate between two restricted zones
 - **Run**: `python medium_nfz_experiment.py --method HYBRID`
 
+<video src="videos/medium_nfz_hybrid.mp4" controls width="600"></video>
+
 ### 4. Pac-Man Maze
 - **Arena**: Walled maze with corridors (like Pac-Man)
 - **Goal**: Navigate through tight corridors without wall collisions
 - **Run**: `python pacman_maze_experiment.py --method HYBRID`
 
+<video src="videos/pacman_maze_hybrid.mp4" controls width="600"></video>
+
 ### 5. Drone Hybrid
 - **Arena**: Drone-like physics with NFZ
 - **Goal**: Navigate with realistic drone movement constraints
 - **Run**: `python drone_hybrid_experiment.py`
+
+<video src="videos/drone_hybrid.mp4" controls width="600"></video>
 
 ---
 
@@ -101,15 +111,3 @@ The **Hybrid GNN+LLM** framework uses a **Sample-Filter-Select** pipeline:
 | NFZ | ~6s | 0 NFZ violations | 100% |
 | Medium NFZ | ~7s | 0 NFZ violations | 100% |
 | Pac-Man Maze | ~8s | 0 wall hits | 100% |
-
----
-
-## 📺 Videos
-
-| File | Experiment |
-|------|-----------|
-| `hybrid_gnn_llm_mixed_obstacle.mp4` | Mixed 20-obstacle navigation |
-| `nfz_hybrid.mp4` | L-shaped NFZ avoidance |
-| `medium_nfz_hybrid.mp4` | Dual NFZ navigation |
-| `pacman_maze_hybrid.mp4` | Pac-Man maze navigation |
-| `drone_hybrid.mp4` | Drone-like physics |

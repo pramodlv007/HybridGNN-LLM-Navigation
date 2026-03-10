@@ -78,6 +78,9 @@ LLM issues direct JSON action commands (turn, fly, hover):
 - **Arena**: 8×8m, 20 obstacles (10 dynamic, 10 static)
 - **Start**: `(-3.6, -3.6, 1.0)` → **Goal**: `(3.6, 3.6, 1.0)`
 - **Height-locked** at z=1.0 to force navigation through obstacles
+
+<video src="videos/hybrid/3d_hybrid_standard.mp4" controls width="600"></video>
+
 ```bash
 python -m scripts.eval --controller hybrid --episodes 10
 ```
@@ -85,12 +88,22 @@ python -m scripts.eval --controller hybrid --episodes 10
 ### 2. No-Fly Zone (NFZ)
 - **Arena**: 25 obstacles + L-shaped / cross-shaped hard wall NFZ
 - **Challenge**: Detect NFZ reactively and reroute
+
+<video src="videos/nfz/3d_nfz_hybrid.mp4" controls width="600"></video>
+
 ```bash
 python -m scripts.eval_nfz --controller hybrid --episodes 5
 ```
 
 ### 3. GNN+LLM Combined
 - **Same environments** as above but with LLM strategic bearing
+
+<video src="videos/gnn_llm/3d_gnn_llm.mp4" controls width="600"></video>
+
+**With NFZ:**
+
+<video src="videos/gnn_llm/3d_gnn_llm_nfz.mp4" controls width="600"></video>
+
 ```bash
 python -m scripts.eval_gnn_llm --episodes 3
 ```
@@ -98,9 +111,14 @@ python -m scripts.eval_gnn_llm --episodes 3
 ### 4. Explicit LLM
 - **Same environments** but LLM issues explicit JSON commands
 - Produces both video and action logs
+
+<video src="videos/explicit_llm/3d_explicit_llm.mp4" controls width="600"></video>
+
+**With NFZ:**
+
+<video src="videos/explicit_llm/3d_explicit_llm_nfz.mp4" controls width="600"></video>
+
 ```bash
-python -m scripts.eval_explicit_llm --episodes 3
-# With NFZ:
 python -m scripts.eval_explicit_llm --episodes 3
 # Without NFZ:
 python -m scripts.eval_explicit_llm --no-nfz --episodes 3
@@ -145,18 +163,3 @@ The drone is a compound PyBullet model (not a simple sphere):
 | **Hybrid** | ~150–250 | ~100% | ~0% |
 | **GNN+LLM** | ~150–250 | ~90–100% | ~0% |
 | Explicit LLM | ~400–750 | ~67–100% | ~0% |
-
----
-
-## 📺 Video Index
-
-| File | Description |
-|------|------------|
-| `hybrid/3d_hybrid_standard.mp4` | Standard 3D hybrid navigation |
-| `nfz/3d_nfz_hybrid.mp4` | NFZ avoidance in 3D |
-| `gnn_llm/3d_gnn_llm.mp4` | GNN+LLM combined (standard) |
-| `gnn_llm/3d_gnn_llm_nfz.mp4` | GNN+LLM combined (NFZ) |
-| `explicit_llm/3d_explicit_llm.mp4` | Explicit LLM (standard) |
-| `explicit_llm/3d_explicit_llm_action_log.txt` | Timestamped LLM action log |
-| `explicit_llm/3d_explicit_llm_nfz.mp4` | Explicit LLM (NFZ) |
-| `explicit_llm/3d_explicit_llm_nfz_action_log.txt` | NFZ action log |

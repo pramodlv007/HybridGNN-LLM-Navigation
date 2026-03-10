@@ -2,6 +2,14 @@
 
 > A tiered decision-making architecture combining **Graph Neural Networks** for real-time safety assessment with **Large Language Models** for strategic planning — tested across 2D MuJoCo and 3D PyBullet environments.
 
+## 🎬 Demo Videos
+
+### 2D Hybrid GNN+LLM — Mixed Obstacle Navigation
+<video src="experiments_2d/videos/hybrid_gnn_llm_mixed_obstacle.mp4" controls width="600"></video>
+
+### 3D Hybrid GNN+LLM — Drone NFZ Avoidance
+<video src="experiments_3d/videos/gnn_llm/3d_gnn_llm_nfz.mp4" controls width="600"></video>
+
 ---
 
 ## 🏗️ Architecture
@@ -100,22 +108,79 @@ HybridGNN-LLM-Navigation/
 
 ### 2D MuJoCo Experiments
 
-| Experiment | Environment | Challenge | Run Command |
-|-----------|-------------|-----------|-------------|
-| **Mixed Obstacle** | 20 obstacles (10 dynamic + 10 static) | Navigate through chaotic obstacle field | `python run_gnn_llm_hybrid.py` |
-| **NFZ** | L-shaped no-fly zone + 25 obstacles | Avoid NFZ while dodging obstacles | `python nfz_experiment.py --method HYBRID` |
-| **Medium NFZ** | 2 no-fly zones + 25 obstacles | Navigate between dual NFZs | `python medium_nfz_experiment.py --method HYBRID` |
-| **Pac-Man Maze** | Walled maze corridors | Navigate tight corridors without wall collision | `python pacman_maze_experiment.py --method HYBRID` |
-| **Drone Hybrid** | Drone-like physics | Navigate with drone movement model | `python drone_hybrid_experiment.py` |
+#### Mixed Obstacle Navigation
+20 obstacles (10 dynamic + 10 static) — Navigate through chaotic obstacle field
+<video src="experiments_2d/videos/hybrid_gnn_llm_mixed_obstacle.mp4" controls width="600"></video>
+
+```bash
+python run_gnn_llm_hybrid.py
+```
+
+#### No-Fly Zone (NFZ)
+L-shaped no-fly zone + 25 obstacles — Avoid NFZ while dodging obstacles
+<video src="experiments_2d/videos/nfz_hybrid.mp4" controls width="600"></video>
+
+```bash
+python nfz_experiment.py --method HYBRID
+```
+
+#### Medium NFZ (Dual Zones)
+2 no-fly zones + 25 obstacles — Navigate between dual NFZs
+<video src="experiments_2d/videos/medium_nfz_hybrid.mp4" controls width="600"></video>
+
+```bash
+python medium_nfz_experiment.py --method HYBRID
+```
+
+#### Pac-Man Maze
+Walled maze corridors — Navigate tight corridors without wall collision
+<video src="experiments_2d/videos/pacman_maze_hybrid.mp4" controls width="600"></video>
+
+```bash
+python pacman_maze_experiment.py --method HYBRID
+```
+
+#### Drone Hybrid
+Drone-like physics — Navigate with drone movement model
+<video src="experiments_2d/videos/drone_hybrid.mp4" controls width="600"></video>
+
+```bash
+python drone_hybrid_experiment.py
+```
 
 ### 3D PyBullet Drone Experiments
 
-| Experiment | Environment | Challenge | Run Command |
-|-----------|-------------|-----------|-------------|
-| **Standard** | 8×8m arena, 20 obstacles | 3D drone navigation | `python -m scripts.eval --controller hybrid` |
-| **NFZ** | L-shaped hard wall + 25 obstacles | 3D NFZ avoidance | `python -m scripts.eval_nfz --controller hybrid` |
-| **GNN+LLM** | Same as above | Combined GNN+LLM pipeline | `python -m scripts.eval_gnn_llm` |
-| **Explicit LLM** | Same as above | LLM issues direct JSON commands | `python -m scripts.eval_explicit_llm` |
+#### Standard 3D Navigation
+8×8m arena, 20 obstacles — 3D drone navigation
+<video src="experiments_3d/videos/hybrid/3d_hybrid_standard.mp4" controls width="600"></video>
+
+```bash
+python -m scripts.eval --controller hybrid --episodes 5
+```
+
+#### 3D NFZ Avoidance
+L-shaped hard wall + 25 obstacles — 3D NFZ avoidance
+<video src="experiments_3d/videos/nfz/3d_nfz_hybrid.mp4" controls width="600"></video>
+
+```bash
+python -m scripts.eval_nfz --controller hybrid --episodes 5
+```
+
+#### GNN+LLM Combined
+Combined GNN safety + LLM strategic bearing
+<video src="experiments_3d/videos/gnn_llm/3d_gnn_llm.mp4" controls width="600"></video>
+
+```bash
+python -m scripts.eval_gnn_llm --episodes 3
+```
+
+#### Explicit LLM (JSON Commands)
+LLM issues direct JSON action commands — fully interpretable
+<video src="experiments_3d/videos/explicit_llm/3d_explicit_llm.mp4" controls width="600"></video>
+
+```bash
+python -m scripts.eval_explicit_llm --episodes 3
+```
 
 ---
 
@@ -227,26 +292,11 @@ python -m scripts.eval_explicit_llm --episodes 3
 
 ---
 
-## 📺 Included Video Recordings
+## 📺 All Video Recordings
 
-### 2D Experiments
-| Video | Description |
-|-------|-------------|
-| `hybrid_gnn_llm_mixed_obstacle.mp4` | Mixed 20-obstacle navigation |
-| `nfz_hybrid.mp4` | L-shaped NFZ avoidance |
-| `medium_nfz_hybrid.mp4` | Dual NFZ navigation |
-| `pacman_maze_hybrid.mp4` | Pac-Man maze corridors |
-| `drone_hybrid.mp4` | Drone-like physics navigation |
-
-### 3D Experiments
-| Video | Description |
-|-------|-------------|
-| `hybrid/3d_hybrid_standard.mp4` | Standard 3D drone hybrid |
-| `nfz/3d_nfz_hybrid.mp4` | 3D NFZ avoidance |
-| `gnn_llm/3d_gnn_llm.mp4` | GNN+LLM combined |
-| `gnn_llm/3d_gnn_llm_nfz.mp4` | GNN+LLM with NFZ |
-| `explicit_llm/3d_explicit_llm.mp4` | Explicit LLM + action log |
-| `explicit_llm/3d_explicit_llm_nfz.mp4` | Explicit LLM NFZ + action log |
+All experiment videos are embedded inline in the sections above. They are also available at:
+- **2D**: [`experiments_2d/videos/`](experiments_2d/videos/)
+- **3D**: [`experiments_3d/videos/`](experiments_3d/videos/)
 
 ---
 
