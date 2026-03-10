@@ -79,7 +79,7 @@ LLM issues direct JSON action commands (turn, fly, hover):
 - **Start**: `(-3.6, -3.6, 1.0)` → **Goal**: `(3.6, 3.6, 1.0)`
 - **Height-locked** at z=1.0 to force navigation through obstacles
 
-<video src="videos/hybrid/3d_hybrid_standard.mp4" controls width="600"></video>
+![videos/hybrid/3d_hybrid_standard](videos/hybrid/3d_hybrid_standard.gif)
 
 ```bash
 python -m scripts.eval --controller hybrid --episodes 10
@@ -89,7 +89,7 @@ python -m scripts.eval --controller hybrid --episodes 10
 - **Arena**: 25 obstacles + L-shaped / cross-shaped hard wall NFZ
 - **Challenge**: Detect NFZ reactively and reroute
 
-<video src="videos/nfz/3d_nfz_hybrid.mp4" controls width="600"></video>
+![videos/nfz/3d_nfz_hybrid](videos/nfz/3d_nfz_hybrid.gif)
 
 ```bash
 python -m scripts.eval_nfz --controller hybrid --episodes 5
@@ -98,11 +98,11 @@ python -m scripts.eval_nfz --controller hybrid --episodes 5
 ### 3. GNN+LLM Combined
 - **Same environments** as above but with LLM strategic bearing
 
-<video src="videos/gnn_llm/3d_gnn_llm.mp4" controls width="600"></video>
+![videos/gnn_llm/3d_gnn_llm](videos/gnn_llm/3d_gnn_llm.gif)
 
 **With NFZ:**
 
-<video src="videos/gnn_llm/3d_gnn_llm_nfz.mp4" controls width="600"></video>
+![videos/gnn_llm/3d_gnn_llm_nfz](videos/gnn_llm/3d_gnn_llm_nfz.gif)
 
 ```bash
 python -m scripts.eval_gnn_llm --episodes 3
@@ -112,11 +112,11 @@ python -m scripts.eval_gnn_llm --episodes 3
 - **Same environments** but LLM issues explicit JSON commands
 - Produces both video and action logs
 
-<video src="videos/explicit_llm/3d_explicit_llm.mp4" controls width="600"></video>
+![videos/explicit_llm/3d_explicit_llm](videos/explicit_llm/3d_explicit_llm.gif)
 
 **With NFZ:**
 
-<video src="videos/explicit_llm/3d_explicit_llm_nfz.mp4" controls width="600"></video>
+![videos/explicit_llm/3d_explicit_llm_nfz](videos/explicit_llm/3d_explicit_llm_nfz.gif)
 
 ```bash
 python -m scripts.eval_explicit_llm --episodes 3
