@@ -1,0 +1,84 @@
+{
+    "move_forward": {
+        "velocity": [
+            2.0,
+            0.0,
+            0.0
+        ],
+        "duration": 1.0,
+        "description": "fly forward along current heading for 1s",
+        "action_type": "translate"
+    },
+    "turn_left_30": {
+        "velocity": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "yaw_change": 30.0,
+        "duration": 0.5,
+        "description": "turn heading left by 30 degrees",
+        "action_type": "rotate"
+    },
+    "turn_right_30": {
+        "velocity": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "yaw_change": -30.0,
+        "duration": 0.5,
+        "description": "turn heading right by 30 degrees",
+        "action_type": "rotate"
+    },
+    "swing_left_30": {
+        "velocity": [
+            0.0,
+            2.0,
+            0.0
+        ],
+        "duration": 0.5,
+        "description": "swing left (roll) temporarily for 0.5s",
+        "action_type": "translate_local"
+    },
+    "swing_right_30": {
+        "velocity": [
+            0.0,
+            -2.0,
+            0.0
+        ],
+        "duration": 0.5,
+        "description": "swing right (roll) temporarily for 0.5s",
+        "action_type": "translate_local"
+    },
+    "ascend": {
+        "velocity": [
+            0.0,
+            0.0,
+            2.0
+        ],
+        "duration": 0.5,
+        "description": "increase altitude (fly up) for 0.5s",
+        "action_type": "translate_z"
+    },
+    "descend": {
+        "velocity": [
+            0.0,
+            0.0,
+            -2.0
+        ],
+        "duration": 0.5,
+        "description": "decrease altitude (fly down) for 0.5s",
+        "action_type": "translate_z"
+    },
+    "stay": {
+        "velocity": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "duration": 1.0,
+        "description": "hover in place for 1s",
+        "action_type": "hover"
+    }
+}
