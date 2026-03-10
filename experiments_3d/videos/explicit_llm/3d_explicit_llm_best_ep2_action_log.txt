@@ -1,0 +1,16 @@
+[13.05s] LLM ACTION SELECTED: turn heading left by 30 degrees (Type: rotate)
+[13.55s] LLM ACTION SELECTED: turn heading right by 30 degrees (Type: rotate)
+[14.05s] LLM API Error/Quota. Using MOCK actions.
+[14.05s] [MOCK] ACTION SELECTED: Turn Right 30 deg
+[14.55s] LLM ACTION SELECTED: fly forward along current heading for 1s (Type: translate)
+[15.55s] LLM ACTION SELECTED: turn heading right by 30 degrees (Type: rotate)
+[16.05s] LLM ACTION SELECTED: turn heading right by 30 degrees (Type: rotate)
+[16.55s] LLM ACTION SELECTED: turn heading right by 30 degrees (Type: rotate)
+[17.05s] LLM ACTION SELECTED: turn heading right by 30 degrees (Type: rotate)
+[17.55s] LLM API Error/Quota. Using MOCK actions.
+[17.55s] [MOCK] ACTION SELECTED: Move Forward 1m
+[18.55s] LLM ACTION SELECTED: turn heading left by 30 degrees (Type: rotate)
+[19.05s] LLM ACTION SELECTED: turn heading right by 30 degrees (Type: rotate)
+[19.55s] LLM ACTION SELECTED: turn heading right by 30 degrees (Type: rotate)
+[20.05s] LLM ACTION SELECTED: fly forward along current heading for 1s (Type: translate)
+[21.05s] LLM ACTION SELECTED: turn heading right by 30 degrees (Type: rotate)
