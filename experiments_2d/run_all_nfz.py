@@ -11,10 +11,10 @@ Usage:
 import os
 import sys
 
-# Ensure project root is on PYTHONPATH
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
+# Ensure experiments_2d dir is on path
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from experiments.cat_expt.nfz_experiment import run_nfz_experiment
+from nfz_experiment import run_nfz_experiment
 
 
 def main():

@@ -5,7 +5,7 @@ import re
 
 import requests
 from openai import OpenAI
-from experiments.physical_question_expt.utils.llm_router import *
+from utils.llm_router import *
 
 def strip_markdown(text: str) -> str:
     text = re.sub(r"```", "", text)

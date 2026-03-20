@@ -21,9 +21,9 @@ import os
 import sys
 import numpy as np
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../")))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../experiments_2d")))
 try:
-    from experiments.cat_expt.utils.cat_game_agent import LLM_Agent
+    from utils.cat_game_agent import LLM_Agent
 except ImportError:
     LLM_Agent = None
 
@@ -55,7 +55,7 @@ class ExplicitLLMController:
         # Load available moves
         moves_path = os.path.abspath(os.path.join(
             os.path.dirname(__file__),
-            "../../experiments/cat_expt/env/drone_available_move.json"))
+            "../envs/drone_available_move.json"))
         try:
             with open(moves_path, 'r') as f:
                 self.available_move = f.read()

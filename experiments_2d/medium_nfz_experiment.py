@@ -28,14 +28,13 @@ import argparse
 import math
 import copy
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from experiments.cat_expt.utils.cat_game_agent import LLM_Agent
-from experiments.cat_expt.utils.APEX import APEX
-from experiments.cat_expt.model.graphormer import DiffGraphormer
-from experiments.cat_expt.model.local_risk_gnn import LocalRiskGNN
-from experiments.cat_expt.utils.mujoco_simulator import get_body_state, get_all_body_states
+from utils.cat_game_agent import LLM_Agent
+from utils.APEX import APEX
+from model.graphormer import DiffGraphormer
+from model.local_risk_gnn import LocalRiskGNN
+from utils.mujoco_simulator import get_body_state, get_all_body_states
 
 # ============================================================
 # CONSTANTS

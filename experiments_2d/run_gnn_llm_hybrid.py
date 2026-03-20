@@ -21,15 +21,13 @@ import os
 import sys
 
 # Adjust sys.path to include the project root
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../")))
-# Import local APEX_Path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 # from experiments.cat_expt.utils.cat_game_agent import LLM_Agent
 # from experiments.cat_expt.utils.APEX import APEX
 
-from experiments.cat_expt.model.local_risk_gnn import LocalRiskGNN
-from experiments.cat_expt.utils.mujoco_simulator import get_body_state, get_all_body_states
+from model.local_risk_gnn import LocalRiskGNN
+from utils.mujoco_simulator import get_body_state, get_all_body_states
 from hybrid_nav import HybridController, GNNSafetyChecker, StrategicNavigator
 
 # Constants
@@ -45,9 +43,8 @@ last_stuck_pos = START_POS[:2]
 
 # Paths
 base_path = os.path.dirname(os.path.abspath(__file__))
-root_path = os.path.abspath(os.path.join(base_path, "../"))
 
-with open(os.path.join(root_path, "env/available_move.json"), 'r') as f:
+with open(os.path.join(base_path, "env/available_move.json"), 'r') as f:
     available_move = json.load(f)
 
 
@@ -148,7 +145,7 @@ def run_gnn_path_mixed_exp(method='APEX', model_name='gpt-4o-mini', obstacle_spe
 
     # Load mixed    # Load MuJoCo model
     # Use the new 25-obstacle environment
-    env_path = os.path.join(root_path, "env/mixed_random_env_25.xml") # Updated to 25 obstacles
+    env_path = os.path.join(base_path, "env/mixed_random_env_25.xml") # Updated to 25 obstacles
     with open(env_path, 'r') as f:
         xml_string = f.read()
 
@@ -195,7 +192,7 @@ def run_gnn_path_mixed_exp(method='APEX', model_name='gpt-4o-mini', obstacle_spe
     # Video settings
     fps = 100
     width, height = 640, 480
-    output_dir = os.path.abspath(os.path.join(root_path, "../../videos"))
+    output_dir = os.path.abspath(os.path.join(base_path, "../../videos"))
     os.makedirs(output_dir, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     file_name = os.path.join(output_dir, f"gnn_path_mixed_{method}_{timestamp}.mp4")
@@ -206,7 +203,7 @@ def run_gnn_path_mixed_exp(method='APEX', model_name='gpt-4o-mini', obstacle_spe
     init_frames = int(fps / 2)
     
     # Initialize Hybrid Navigator (GNN Safety + LLM Strategy)
-    safety_model_path = os.path.join(root_path, 'model/diffgraphormer_physics.pt')
+    safety_model_path = os.path.join(base_path, 'model/diffgraphormer_physics.pt')
     
     # 1. Safety Checker (GNN)
     safety_checker = GNNSafetyChecker(

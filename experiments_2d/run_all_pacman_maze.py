@@ -5,7 +5,6 @@ Runs APEX, PULSE, and HYBRID on the MuJoCo Pac-Man maze
 and prints a comparison table.
 """
 import sys, os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from pacman_maze_experiment import run_pacman_maze_experiment

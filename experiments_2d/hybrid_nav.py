@@ -1,8 +1,10 @@
 import torch
 import numpy as np
 import os
+import sys
 import math
-from experiments.cat_expt.model.local_risk_gnn import LocalRiskGNN
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from model.local_risk_gnn import LocalRiskGNN
 import torch.nn.functional as F
 
 class GNNSafetyChecker:

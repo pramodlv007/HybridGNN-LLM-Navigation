@@ -7,9 +7,9 @@ Runs all 3 methods on the Medium NFZ environment (2 NFZ zones).
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from experiments.cat_expt.medium_nfz_experiment import run_medium_nfz_experiment
+from medium_nfz_experiment import run_medium_nfz_experiment
 
 
 def main():

@@ -6,7 +6,7 @@ import os
 
 import numpy as np
 import torch
-from experiments.cat_expt.utils.mujoco_simulator import simulator
+from utils.mujoco_simulator import simulator
 
 
 class APEX:

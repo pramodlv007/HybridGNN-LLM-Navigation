@@ -19,13 +19,12 @@ import torch
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from experiments.cat_expt.utils.cat_game_agent import LLM_Agent
-from experiments.cat_expt.model.local_risk_gnn_16feat import LocalRiskGNN16Feat
-from experiments.cat_expt.utils.mujoco_simulator import get_body_state, get_all_body_states
-from experiments.cat_expt.medium_nfz_experiment import (
+from utils.cat_game_agent import LLM_Agent
+from model.local_risk_gnn_16feat import LocalRiskGNN16Feat
+from utils.mujoco_simulator import get_body_state, get_all_body_states
+from medium_nfz_experiment import (
     START_POS, TARGET_POS, NUM_DYNAMIC, NUM_STATIC, NUM_TOTAL, NFZ_ZONES,
     is_inside_any_nfz, min_nfz_distance, combined_nfz_repulsion,
     would_enter_nfz_swept, randomize_all_obstacles, update_dynamic_obstacles,
