@@ -327,6 +327,7 @@ class DroneNav3DEnv:
         self.drone_pos += self.drone_vel * self.dt
         self.drone_pos[2] = 1.0  # Stay at obstacle height
 
+
         # Clamp to arena bounds with wall margin (drone cannot touch walls)
         wall_margin = 0.3  # Keep 0.3m from arena walls
         self.drone_pos[:2] = np.clip(
@@ -341,22 +342,35 @@ class DroneNav3DEnv:
                 self.drone_vel[axis] *= 0.7  # Gently reduce velocity along wall
 
         # Calculate drone tilt for visual realism
-        # Pitch: lean forward when translating (max ~15 degrees)
-        forward_speed = np.linalg.norm(self.drone_vel[:2])
-        pitch = -np.clip(forward_speed * 0.08, 0, math.radians(15))
+        # Decompose acceleration into drone-local forward and lateral components
+        # Forward = along yaw direction  →  pitch (lean forward/backward)
+        # Lateral = perpendicular to yaw →  roll (bank left/right)
 
-        # Roll: tilt into turns based on lateral acceleration
-        # If drone is turning (yaw changing), tilt sideways
-        if hasattr(self, '_prev_yaw'):
-            yaw_rate = target_yaw - self._prev_yaw
-            # Normalize yaw_rate 
-            yaw_rate = (yaw_rate + math.pi) % (2 * math.pi) - math.pi
-            roll = np.clip(yaw_rate * 2.0, -math.radians(10), math.radians(10))
-        else:
-            roll = 0.0
-        self._prev_yaw = target_yaw
+        # Smooth yaw transition to prevent jerky snapping
+        if not hasattr(self, '_smooth_yaw'):
+            self._smooth_yaw = target_yaw
 
-        orn = p.getQuaternionFromEuler([roll, pitch, target_yaw])
+        yaw_diff = (target_yaw - self._smooth_yaw + math.pi) % (2 * math.pi) - math.pi
+        self._smooth_yaw += yaw_diff * 0.15  # Smooth interpolation factor
+
+        yaw = self._smooth_yaw
+
+        # Drone's local frame axes (in world coordinates)
+        forward_dir = np.array([math.cos(yaw), math.sin(yaw)])   # Drone's forward
+        lateral_dir = np.array([-math.sin(yaw), math.cos(yaw)])  # Drone's left
+
+        # Project acceleration onto forward and lateral axes
+        accel_xy = action_acc[:2]
+        forward_accel = np.dot(accel_xy, forward_dir)  # + = accelerating forward
+        lateral_accel = np.dot(accel_xy, lateral_dir)   # + = accelerating left
+
+        # Pitch: lean forward when accelerating forward (max 20 degrees)
+        pitch = -np.clip(forward_accel * 0.06, -math.radians(20), math.radians(20))
+
+        # Roll: bank into turns — tilt right when accelerating right (max 25 degrees)
+        roll = np.clip(-lateral_accel * 0.08, -math.radians(25), math.radians(25))
+
+        orn = p.getQuaternionFromEuler([roll, pitch, yaw])
         p.resetBasePositionAndOrientation(
             self.drone, self.drone_pos, orn,
             physicsClientId=self.physics)

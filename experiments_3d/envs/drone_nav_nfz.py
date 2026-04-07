@@ -55,14 +55,9 @@ class DroneNavNFZEnv:
         self.start_pos = np.array([-3.6, -3.6, self.flight_height])
         self.goal_pos = np.array([3.6, 3.6, self.flight_height])
 
-        # NFZ: CROSS / PLUS (+) SHAPE
-        # Centered at roughly (0, 0.5)
-        # Vertical bar + horizontal bar forming a +
+        # NFZ: LARGE CENTER RECTANGLE
         self.nfz_blocks = [
-            # --- VERTICAL BAR (tall, narrow) ---
-            {"min": np.array([-0.5, -1.8]), "max": np.array([ 0.5,  2.8])},
-            # --- HORIZONTAL BAR (wide, short) ---
-            {"min": np.array([-2.0, -0.2]), "max": np.array([ 2.0,  1.2])},
+            {"min": np.array([-1.5, -1.5]), "max": np.array([ 1.5,  1.5])},
         ]
 
         self.drone_pos = None
@@ -93,8 +88,8 @@ class DroneNavNFZEnv:
         # Ground plane
         self.plane = p.loadURDF("plane.urdf", physicsClientId=self.physics)
 
-        # Arena walls
-        wall_color = [0.6, 0.6, 0.6, 0.3]
+        # Arena walls — invisible (alpha=0), physics-free, purely decorative
+        wall_color = [0.6, 0.6, 0.6, 0.0]   # fully transparent
         walls = [
             ([-4, 0, 1.5], [0.05, 4, 1.5]),
             ([4, 0, 1.5],  [0.05, 4, 1.5]),
@@ -297,22 +292,20 @@ class DroneNavNFZEnv:
     def _push_out_of_nfz(self, pos, vel):
         """
         STRICT NFZ enforcement.
-        Check if the robot body (including radius) overlaps any NFZ block.
-        If so, push it completely outside with a generous margin.
+        Pushes drone outside NFZ and zeroes the wall-directed velocity
+        to prevent oscillation without affecting the tangential component.
         Returns corrected (pos, vel, was_blocked).
         """
-        margin = self.robot_radius + 0.1  # Generous margin outside NFZ edge
+        margin = self.robot_radius + 0.15  # Increased margin (was 0.1)
         corrected = False
 
         for block in self.nfz_blocks:
-            # Inflate NFZ by robot radius — the center must stay this far out
             bmin_x = block["min"][0] - self.robot_radius
             bmax_x = block["max"][0] + self.robot_radius
             bmin_y = block["min"][1] - self.robot_radius
             bmax_y = block["max"][1] + self.robot_radius
 
             if (bmin_x <= pos[0] <= bmax_x and bmin_y <= pos[1] <= bmax_y):
-                # Robot body overlaps this block — find nearest edge to push to
                 dist_left  = pos[0] - bmin_x
                 dist_right = bmax_x - pos[0]
                 dist_bot   = pos[1] - bmin_y
@@ -322,7 +315,7 @@ class DroneNavNFZEnv:
 
                 if min_dist == dist_left:
                     pos[0] = bmin_x - margin
-                    vel[0] = min(vel[0], 0)
+                    vel[0] = min(vel[0], 0)  # Stop moving toward wall
                 elif min_dist == dist_right:
                     pos[0] = bmax_x + margin
                     vel[0] = max(vel[0], 0)
@@ -363,6 +356,7 @@ class DroneNavNFZEnv:
         self.drone_pos += self.drone_vel * self.dt
         self.drone_pos[2] = self.flight_height
 
+
         # Wall margin clamping
         wall_margin = 0.3
         self.drone_pos[:2] = np.clip(
@@ -374,18 +368,33 @@ class DroneNavNFZEnv:
         self.drone_pos, self.drone_vel, nfz_blocked = self._push_out_of_nfz(
             self.drone_pos, self.drone_vel)
 
-        # Calculate drone tilt
-        forward_speed = np.linalg.norm(self.drone_vel[:2])
-        pitch = -np.clip(forward_speed * 0.08, 0, math.radians(15))
-        if hasattr(self, '_prev_yaw'):
-            yaw_rate = target_yaw - self._prev_yaw
-            yaw_rate = (yaw_rate + math.pi) % (2 * math.pi) - math.pi
-            roll = np.clip(yaw_rate * 2.0, -math.radians(10), math.radians(10))
+        # === Drone orientation — identical logic to drone_nav_3d.py ===
+        # Smooth yaw from velocity direction
+        speed_xy = np.linalg.norm(self.drone_vel[:2])
+        if speed_xy > 0.05:
+            target_yaw = math.atan2(self.drone_vel[1], self.drone_vel[0])
         else:
-            roll = 0.0
-        self._prev_yaw = target_yaw
+            target_yaw = self.last_yaw
+        self.last_yaw = target_yaw
 
-        orn = p.getQuaternionFromEuler([roll, pitch, target_yaw])
+        if not hasattr(self, '_smooth_yaw'):
+            self._smooth_yaw = target_yaw
+        yaw_diff = (target_yaw - self._smooth_yaw + math.pi) % (2 * math.pi) - math.pi
+        self._smooth_yaw += yaw_diff * 0.15
+        yaw = self._smooth_yaw
+
+        # Decompose acceleration into drone-local forward/lateral axes
+        forward_dir = np.array([math.cos(yaw), math.sin(yaw)])
+        lateral_dir = np.array([-math.sin(yaw), math.cos(yaw)])
+        accel_xy = action_acc[:2]
+        forward_accel = np.dot(accel_xy, forward_dir)
+        lateral_accel = np.dot(accel_xy, lateral_dir)
+
+        # Pitch: lean forward; Roll: bank into turns
+        pitch = -np.clip(forward_accel * 0.06, -math.radians(20), math.radians(20))
+        roll  =  np.clip(-lateral_accel * 0.08, -math.radians(25), math.radians(25))
+
+        orn = p.getQuaternionFromEuler([roll, pitch, yaw])
         p.resetBasePositionAndOrientation(
             self.drone, self.drone_pos, orn,
             physicsClientId=self.physics)
@@ -484,9 +493,9 @@ class DroneNavNFZEnv:
 
         elif camera == "top":
             view_matrix = p.computeViewMatrix(
-                cameraEyePosition=[0, 0, 16],
+                cameraEyePosition=[0, -4, 14],    # slightly angled from slightly behind
                 cameraTargetPosition=[0, 0, 1],
-                cameraUpVector=[1, 0, 0],
+                cameraUpVector=[0, 0, 1],
                 physicsClientId=self.physics)
 
         elif camera == "front":
