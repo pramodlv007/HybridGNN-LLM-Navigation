@@ -6,19 +6,24 @@
 
 ## 🎬 Best Performance Demos
 
-### 🏆 Demo 1 — Standard Environment (93.3% success rate)
+### 🏆 Demo 1 — Standard Environment · 93.3% success rate
 > **Episode ep4 · 168 steps · SUCCESS · 0 collisions · 0 NFZ violations**
-> Fastest successful navigation through 20 dynamic+static obstacles from (−3.6,−3.6) → (3.6,3.6)
+> Fastest navigation through 20 dynamic+static obstacles — start (−3.6, −3.6) → goal (3.6, 3.6)
 
 ![Hybrid GNN+LLM — Standard Env Best Run (168 steps)](experiments_3d/videos/gnn_llm/3d_gnn_llm_best_ep4.gif)
 
+**[▶️ Watch full video (MP4)](experiments_3d/videos/gnn_llm/3d_gnn_llm_best_ep4.mp4)**
+
 ---
 
-### 🏆 Demo 2 — NFZ Environment (80% success rate, 0% NFZ violations)
+### 🏆 Demo 2 — NFZ Environment · 80% success rate · 0% NFZ violations
 > **Episode NFZ-ep3 · Clean NFZ bypass · SUCCESS · 0 NFZ violations**
-> Drone detects the 3×3m no-fly wall mid-route and routes around it via waypoint planning
+> Drone routes around the 3×3m no-fly hard wall via pre-planned waypoints while dodging 25 obstacles
 
 ![Hybrid GNN+LLM — NFZ Env Best Run (0 violations)](experiments_3d/videos/gnn_llm/3d_gnn_llm_nfz_best_ep3.gif)
+
+**[▶️ Watch full video (MP4)](experiments_3d/videos/gnn_llm/3d_gnn_llm_nfz_best_ep3.mp4)**
+
 
 ---
 
@@ -28,12 +33,14 @@
 
 ### ⚡ Hybrid wins 12 out of 13 metrics across both environments.
 
-| | Hybrid GNN+LLM (Standard) | Hybrid GNN+LLM (NFZ) |
+| | Standard Env | NFZ Env |
 |---|:---:|:---:|
-| **Best run demo** | ![](experiments_3d/videos/gnn_llm/3d_gnn_llm_best_ep4.gif) | ![](experiments_3d/videos/gnn_llm/3d_gnn_llm_nfz_best_ep3.gif) |
-| **Success rate** | **93.3%** | **80.0%** |
+| **Best run (GIF preview)** | ![](experiments_3d/videos/gnn_llm/3d_gnn_llm_best_ep4.gif) | ![](experiments_3d/videos/gnn_llm/3d_gnn_llm_nfz_best_ep3.gif) |
+| **Full video** | [▶️ MP4](experiments_3d/videos/gnn_llm/3d_gnn_llm_best_ep4.mp4) | [▶️ MP4](experiments_3d/videos/gnn_llm/3d_gnn_llm_nfz_best_ep3.mp4) |
+| **Success rate** | **93.3%** (28/30) | **80.0%** (24/30) |
 | **Timeout rate** | **0.0%** | **0.0%** |
-| **NFZ violations** | N/A | **0% vs VLM's 33.3%** |
+| **NFZ violations** | N/A | **20.0%** vs VLM 33.3% |
+| **Avg steps** | **374** vs VLM 546 | **481** vs VLM 482 |
 
 ### Standard Environment (No NFZ) — 30 Episodes
 
