@@ -4,13 +4,21 @@
 
 ---
 
-## 🎬 Demo Videos
+## 🎬 Best Performance Demos
 
-### 2D Hybrid GNN+LLM — Mixed Obstacle Navigation
-![](experiments_2d/videos/hybrid_gnn_llm_mixed_obstacle.gif)
+### 🏆 Demo 1 — Standard Environment (93.3% success rate)
+> **Episode ep4 · 168 steps · SUCCESS · 0 collisions · 0 NFZ violations**
+> Fastest successful navigation through 20 dynamic+static obstacles from (−3.6,−3.6) → (3.6,3.6)
 
-### 3D Hybrid GNN+LLM — Drone NFZ Avoidance
-![](experiments_3d/videos/gnn_llm/3d_gnn_llm_nfz.gif)
+![Hybrid GNN+LLM — Standard Env Best Run (168 steps)](experiments_3d/videos/gnn_llm/3d_gnn_llm_best_ep4.gif)
+
+---
+
+### 🏆 Demo 2 — NFZ Environment (80% success rate, 0% NFZ violations)
+> **Episode NFZ-ep3 · Clean NFZ bypass · SUCCESS · 0 NFZ violations**
+> Drone detects the 3×3m no-fly wall mid-route and routes around it via waypoint planning
+
+![Hybrid GNN+LLM — NFZ Env Best Run (0 violations)](experiments_3d/videos/gnn_llm/3d_gnn_llm_nfz_best_ep3.gif)
 
 ---
 
@@ -19,6 +27,13 @@
 > **Setup:** 3D PyBullet | **30 episodes per condition** | GPT-4o text (Hybrid) vs GPT-4o Vision (VLM) | Report date: April 7, 2026
 
 ### ⚡ Hybrid wins 12 out of 13 metrics across both environments.
+
+| | Hybrid GNN+LLM (Standard) | Hybrid GNN+LLM (NFZ) |
+|---|:---:|:---:|
+| **Best run demo** | ![](experiments_3d/videos/gnn_llm/3d_gnn_llm_best_ep4.gif) | ![](experiments_3d/videos/gnn_llm/3d_gnn_llm_nfz_best_ep3.gif) |
+| **Success rate** | **93.3%** | **80.0%** |
+| **Timeout rate** | **0.0%** | **0.0%** |
+| **NFZ violations** | N/A | **0% vs VLM's 33.3%** |
 
 ### Standard Environment (No NFZ) — 30 Episodes
 

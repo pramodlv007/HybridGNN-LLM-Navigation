@@ -34,8 +34,12 @@ build/
 # Jupyter
 .ipynb_checkpoints/
 
-# Large files — MP4s excluded (use Git LFS or external hosting)
+# Large files — raw MP4s excluded (use Git LFS or external hosting)
 *.mp4
+# Exception: curated best-episode demos for README showcase
+!experiments_3d/videos/gnn_llm/3d_gnn_llm_best_ep4.mp4
+!experiments_3d/videos/gnn_llm/3d_gnn_llm_nfz_best_ep3.mp4
+
 
 # Microsoft Office lock files
 ~$*
