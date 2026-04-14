@@ -1,0 +1,279 @@
+{
+  "generated": "2026-04-04T21:41:33.716177",
+  "aggregated": {
+    "Hybrid_NFZ": {
+      "n": 5,
+      "successes": 5,
+      "collisions": 5,
+      "timeouts": -5,
+      "nfz_violations": 0,
+      "success_rate": 1.0,
+      "collision_rate": 1.0,
+      "timeout_rate": -1.0,
+      "nfz_violation_rate": 0.0,
+      "avg_steps_all": 701.8,
+      "avg_steps_succ": 701.8
+    },
+    "Hybrid_no_NFZ": {
+      "n": 5,
+      "successes": 5,
+      "collisions": 5,
+      "timeouts": -5,
+      "nfz_violations": 0,
+      "success_rate": 1.0,
+      "collision_rate": 1.0,
+      "timeout_rate": -1.0,
+      "nfz_violation_rate": 0.0,
+      "avg_steps_all": 797.6,
+      "avg_steps_succ": 797.6
+    },
+    "VLM_NFZ": {
+      "n": 5,
+      "successes": 5,
+      "collisions": 1,
+      "timeouts": -1,
+      "nfz_violations": 5,
+      "success_rate": 1.0,
+      "collision_rate": 0.2,
+      "timeout_rate": -0.2,
+      "nfz_violation_rate": 1.0,
+      "avg_steps_all": 585.4,
+      "avg_steps_succ": 585.4
+    },
+    "VLM_no_NFZ": {
+      "n": 5,
+      "successes": 5,
+      "collisions": 5,
+      "timeouts": -5,
+      "nfz_violations": 0,
+      "success_rate": 1.0,
+      "collision_rate": 1.0,
+      "timeout_rate": -1.0,
+      "nfz_violation_rate": 0.0,
+      "avg_steps_all": 612.8,
+      "avg_steps_succ": 612.8
+    }
+  },
+  "episodes": [
+    {
+      "condition": "Hybrid_no_NFZ",
+      "method": "Hybrid",
+      "env": "no_NFZ",
+      "episode": 1,
+      "success": 1,
+      "collision": 1,
+      "nfz_violated": 0,
+      "steps": 794,
+      "time": 7.94
+    },
+    {
+      "condition": "Hybrid_no_NFZ",
+      "method": "Hybrid",
+      "env": "no_NFZ",
+      "episode": 2,
+      "success": 1,
+      "collision": 1,
+      "nfz_violated": 0,
+      "steps": 932,
+      "time": 9.32
+    },
+    {
+      "condition": "Hybrid_no_NFZ",
+      "method": "Hybrid",
+      "env": "no_NFZ",
+      "episode": 3,
+      "success": 1,
+      "collision": 1,
+      "nfz_violated": 0,
+      "steps": 967,
+      "time": 9.67
+    },
+    {
+      "condition": "Hybrid_no_NFZ",
+      "method": "Hybrid",
+      "env": "no_NFZ",
+      "episode": 4,
+      "success": 1,
+      "collision": 1,
+      "nfz_violated": 0,
+      "steps": 573,
+      "time": 5.73
+    },
+    {
+      "condition": "Hybrid_no_NFZ",
+      "method": "Hybrid",
+      "env": "no_NFZ",
+      "episode": 5,
+      "success": 1,
+      "collision": 1,
+      "nfz_violated": 0,
+      "steps": 722,
+      "time": 7.22
+    },
+    {
+      "condition": "VLM_no_NFZ",
+      "method": "VLM",
+      "env": "no_NFZ",
+      "episode": 1,
+      "success": 1,
+      "collision": 1,
+      "nfz_violated": 0,
+      "steps": 600,
+      "time": 6.0
+    },
+    {
+      "condition": "VLM_no_NFZ",
+      "method": "VLM",
+      "env": "no_NFZ",
+      "episode": 2,
+      "success": 1,
+      "collision": 1,
+      "nfz_violated": 0,
+      "steps": 620,
+      "time": 6.2
+    },
+    {
+      "condition": "VLM_no_NFZ",
+      "method": "VLM",
+      "env": "no_NFZ",
+      "episode": 3,
+      "success": 1,
+      "collision": 1,
+      "nfz_violated": 0,
+      "steps": 602,
+      "time": 6.02
+    },
+    {
+      "condition": "VLM_no_NFZ",
+      "method": "VLM",
+      "env": "no_NFZ",
+      "episode": 4,
+      "success": 1,
+      "collision": 1,
+      "nfz_violated": 0,
+      "steps": 620,
+      "time": 6.2
+    },
+    {
+      "condition": "VLM_no_NFZ",
+      "method": "VLM",
+      "env": "no_NFZ",
+      "episode": 5,
+      "success": 1,
+      "collision": 1,
+      "nfz_violated": 0,
+      "steps": 622,
+      "time": 6.22
+    },
+    {
+      "condition": "Hybrid_NFZ",
+      "method": "Hybrid",
+      "env": "NFZ",
+      "episode": 1,
+      "success": 1,
+      "collision": 1,
+      "nfz_violated": 0,
+      "steps": 736,
+      "time": 7.36
+    },
+    {
+      "condition": "Hybrid_NFZ",
+      "method": "Hybrid",
+      "env": "NFZ",
+      "episode": 2,
+      "success": 1,
+      "collision": 1,
+      "nfz_violated": 0,
+      "steps": 687,
+      "time": 6.87
+    },
+    {
+      "condition": "Hybrid_NFZ",
+      "method": "Hybrid",
+      "env": "NFZ",
+      "episode": 3,
+      "success": 1,
+      "collision": 1,
+      "nfz_violated": 0,
+      "steps": 705,
+      "time": 7.05
+    },
+    {
+      "condition": "Hybrid_NFZ",
+      "method": "Hybrid",
+      "env": "NFZ",
+      "episode": 4,
+      "success": 1,
+      "collision": 1,
+      "nfz_violated": 0,
+      "steps": 694,
+      "time": 6.94
+    },
+    {
+      "condition": "Hybrid_NFZ",
+      "method": "Hybrid",
+      "env": "NFZ",
+      "episode": 5,
+      "success": 1,
+      "collision": 1,
+      "nfz_violated": 0,
+      "steps": 687,
+      "time": 6.87
+    },
+    {
+      "condition": "VLM_NFZ",
+      "method": "VLM",
+      "env": "NFZ",
+      "episode": 1,
+      "success": 1,
+      "collision": 0,
+      "nfz_violated": 1,
+      "steps": 585,
+      "time": 5.85
+    },
+    {
+      "condition": "VLM_NFZ",
+      "method": "VLM",
+      "env": "NFZ",
+      "episode": 2,
+      "success": 1,
+      "collision": 0,
+      "nfz_violated": 1,
+      "steps": 585,
+      "time": 5.85
+    },
+    {
+      "condition": "VLM_NFZ",
+      "method": "VLM",
+      "env": "NFZ",
+      "episode": 3,
+      "success": 1,
+      "collision": 0,
+      "nfz_violated": 1,
+      "steps": 586,
+      "time": 5.86
+    },
+    {
+      "condition": "VLM_NFZ",
+      "method": "VLM",
+      "env": "NFZ",
+      "episode": 4,
+      "success": 1,
+      "collision": 1,
+      "nfz_violated": 1,
+      "steps": 586,
+      "time": 5.86
+    },
+    {
+      "condition": "VLM_NFZ",
+      "method": "VLM",
+      "env": "NFZ",
+      "episode": 5,
+      "success": 1,
+      "collision": 0,
+      "nfz_violated": 1,
+      "steps": 585,
+      "time": 5.85
+    }
+  ]
+}

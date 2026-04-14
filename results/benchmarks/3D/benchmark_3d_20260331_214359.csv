@@ -1,0 +1,5 @@
+method,episode,status,steps,dist_to_goal,path_length,path_efficiency,min_obs_dist,success,collision
+Hybrid_GNN_LLM,1,SUCCESS,425,0.49,21.583,2.12,0.292,1,0
+LLM_Only,1,SUCCESS,307,0.48,14.393,1.413,0.389,1,0
+VLM,1,COLLISION,86,5.441,4.942,0.485,0.069,0,1
+APEX,1,SUCCESS,436,0.437,15.893,1.561,0.511,1,0

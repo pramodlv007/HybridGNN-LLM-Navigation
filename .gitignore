@@ -34,5 +34,12 @@ build/
 # Jupyter
 .ipynb_checkpoints/
 
-# Large files (use Git LFS if needed)
-# *.mp4
+# Large files — MP4s excluded (use Git LFS or external hosting)
+*.mp4
+
+# Microsoft Office lock files
+~$*
+
+# Test/scratch video directories
+experiments_3d/videos/testing_20260406/
+experiments_3d/videos/testing_final_20eps/
