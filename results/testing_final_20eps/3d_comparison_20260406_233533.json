@@ -1,0 +1,75 @@
+{
+  "generated": "2026-04-06T23:35:33.983233",
+  "no_nfz": {
+    "hybrid": {
+      "method": "Hybrid_GNN_LLM",
+      "episodes": 20,
+      "successes": 15,
+      "collisions": 3,
+      "timeouts": 2,
+      "nfz_violations": 0,
+      "success_rate": 0.75,
+      "collision_rate": 0.15,
+      "timeout_rate": 0.1,
+      "nfz_violation_rate": 0.0,
+      "avg_steps_all": 316.65,
+      "avg_steps_succ": 288.4,
+      "avg_final_dist": 2.10606191690039,
+      "min_obs_dist": 0.19329937060577024
+    },
+    "vlm": {
+      "method": "VLM",
+      "episodes": 20,
+      "successes": 11,
+      "collisions": 3,
+      "timeouts": 6,
+      "nfz_violations": 0,
+      "success_rate": 0.55,
+      "collision_rate": 0.15,
+      "timeout_rate": 0.3,
+      "nfz_violation_rate": 0.0,
+      "avg_steps_all": 403.5,
+      "avg_steps_succ": 331.27272727272725,
+      "avg_final_dist": 2.9401402070052614,
+      "min_obs_dist": 0.24113663538320637,
+      "vlm_calls": 0,
+      "vlm_failures": 0
+    }
+  },
+  "nfz": {
+    "hybrid": {
+      "method": "Hybrid_NFZ",
+      "episodes": 20,
+      "successes": 11,
+      "collisions": 3,
+      "timeouts": 6,
+      "nfz_violations": 3,
+      "success_rate": 0.55,
+      "collision_rate": 0.15,
+      "timeout_rate": 0.3,
+      "nfz_violation_rate": 0.15,
+      "avg_steps_all": 462.4,
+      "avg_steps_succ": 440.27272727272725,
+      "avg_final_dist": 3.278495062856167,
+      "min_obs_dist": 0.1662495913329495
+    },
+    "vlm": {
+      "method": "VLM_NFZ",
+      "episodes": 20,
+      "successes": 9,
+      "collisions": 3,
+      "timeouts": 8,
+      "nfz_violations": 10,
+      "success_rate": 0.45,
+      "collision_rate": 0.15,
+      "timeout_rate": 0.4,
+      "nfz_violation_rate": 0.5,
+      "avg_steps_all": 496.85,
+      "avg_steps_succ": 478.1111111111111,
+      "avg_final_dist": 3.3751245026816954,
+      "min_obs_dist": 0.2267793232980055,
+      "vlm_calls": 0,
+      "vlm_failures": 0
+    }
+  }
+}

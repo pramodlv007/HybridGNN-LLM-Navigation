@@ -1,0 +1,75 @@
+{
+  "generated": "2026-04-07T01:07:03.016163",
+  "no_nfz": {
+    "hybrid": {
+      "method": "Hybrid_GNN_LLM",
+      "episodes": 30,
+      "successes": 22,
+      "collisions": 7,
+      "timeouts": 1,
+      "nfz_violations": 0,
+      "success_rate": 0.7333333333333333,
+      "collision_rate": 0.23333333333333334,
+      "timeout_rate": 0.03333333333333333,
+      "nfz_violation_rate": 0.0,
+      "avg_steps_all": 329.8,
+      "avg_steps_succ": 340.27272727272725,
+      "avg_final_dist": 1.7121909673617588,
+      "min_obs_dist": 0.17209727559899546
+    },
+    "vlm": {
+      "method": "VLM",
+      "episodes": 30,
+      "successes": 19,
+      "collisions": 4,
+      "timeouts": 7,
+      "nfz_violations": 0,
+      "success_rate": 0.6333333333333333,
+      "collision_rate": 0.13333333333333333,
+      "timeout_rate": 0.23333333333333334,
+      "nfz_violation_rate": 0.0,
+      "avg_steps_all": 467.6333333333333,
+      "avg_steps_succ": 392.3157894736842,
+      "avg_final_dist": 1.763880918912178,
+      "min_obs_dist": 0.2386017334967019,
+      "vlm_calls": 0,
+      "vlm_failures": 0
+    }
+  },
+  "nfz": {
+    "hybrid": {
+      "method": "Hybrid_NFZ",
+      "episodes": 30,
+      "successes": 20,
+      "collisions": 8,
+      "timeouts": 2,
+      "nfz_violations": 6,
+      "success_rate": 0.6666666666666666,
+      "collision_rate": 0.26666666666666666,
+      "timeout_rate": 0.06666666666666667,
+      "nfz_violation_rate": 0.2,
+      "avg_steps_all": 416.4,
+      "avg_steps_succ": 449.25,
+      "avg_final_dist": 1.915157470334936,
+      "min_obs_dist": 0.15768570326165515
+    },
+    "vlm": {
+      "method": "VLM_NFZ",
+      "episodes": 30,
+      "successes": 15,
+      "collisions": 5,
+      "timeouts": 10,
+      "nfz_violations": 8,
+      "success_rate": 0.5,
+      "collision_rate": 0.16666666666666666,
+      "timeout_rate": 0.3333333333333333,
+      "nfz_violation_rate": 0.26666666666666666,
+      "avg_steps_all": 546.3,
+      "avg_steps_succ": 510.06666666666666,
+      "avg_final_dist": 3.225982404233023,
+      "min_obs_dist": 0.22803379983055355,
+      "vlm_calls": 0,
+      "vlm_failures": 0
+    }
+  }
+}

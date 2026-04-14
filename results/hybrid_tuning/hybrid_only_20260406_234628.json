@@ -1,0 +1,32 @@
+{
+  "standard": {
+    "env": "standard",
+    "episodes": 20,
+    "successes": 6,
+    "collisions": 4,
+    "timeouts": 10,
+    "nfz_violations": 0,
+    "success_rate": 0.3,
+    "collision_rate": 0.2,
+    "timeout_rate": 0.5,
+    "nfz_violation_rate": 0.0,
+    "avg_steps_all": 504.1,
+    "avg_steps_succ": 419.0,
+    "avg_final_dist": 4.945318191487602
+  },
+  "nfz": {
+    "env": "nfz",
+    "episodes": 20,
+    "successes": 5,
+    "collisions": 5,
+    "timeouts": 10,
+    "nfz_violations": 2,
+    "success_rate": 0.25,
+    "collision_rate": 0.25,
+    "timeout_rate": 0.5,
+    "nfz_violation_rate": 0.1,
+    "avg_steps_all": 491.45,
+    "avg_steps_succ": 445.4,
+    "avg_final_dist": 5.440318799627278
+  }
+}

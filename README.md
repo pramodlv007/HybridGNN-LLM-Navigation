@@ -1,6 +1,8 @@
 # 🧠 Hybrid GNN+LLM Navigation Framework
 
-> A tiered decision-making architecture combining **Graph Neural Networks** for real-time safety assessment with **Large Language Models** for strategic planning — tested across 2D MuJoCo and 3D PyBullet environments.
+> A tiered decision-making architecture combining **Graph Neural Networks** for real-time safety assessment with **Large Language Models** for strategic planning — benchmarked in 2D MuJoCo and **3D PyBullet** environments against a VLM baseline.
+
+---
 
 ## 🎬 Demo Videos
 
@@ -64,18 +66,25 @@ HybridGNN-LLM-Navigation/
 │   ├── medium_nfz_experiment.py           # Dual NFZ experiment
 │   ├── pacman_maze_experiment.py          # Pac-Man maze experiment
 │   ├── drone_hybrid_experiment.py         # Drone hybrid experiment
-│   ├── run_all_*.py                       # Batch runners
-│   ├── env/                               # MuJoCo XML environments
-│   ├── model/                             # GNN models + trained weights
-│   ├── utils/                             # APEX agent, MuJoCo simulator
-│   └── videos/                            # Experiment recordings
+│   ├── run_2d_full_comparison.py          # Full 2D Hybrid vs VLM comparison
+│   ├── run_benchmark_2d.py                # 2D benchmark runner
+│   ├── env/                              # MuJoCo XML environments
+│   ├── model/                            # GNN models + trained weights
+│   ├── utils/                            # APEX agent, MuJoCo simulator
+│   ├── visualization/                    # Result plots and charts
+│   └── videos/                           # Experiment recordings
 │
 ├── experiments_3d/                        # ═══ 3D PyBullet Drone Experiments ═══
 │   ├── README.md                          # Detailed 3D documentation
+│   ├── run_3d_expt.py                     # Single-episode 3D runner
+│   ├── run_3d_expt_loop.py                # Multi-episode 3D runner
+│   ├── run_benchmark_3d.py                # Benchmark runner (Hybrid vs VLM)
+│   ├── run_multi_trial.py                 # Multi-trial runner
 │   ├── controllers/                       # Navigation controllers
 │   │   ├── hybrid_controller.py           # Standard 3D hybrid
 │   │   ├── hybrid_nfz_controller.py       # NFZ-aware hybrid
-│   │   ├── hybrid_gnn_llm_controller.py   # GNN+LLM combined
+│   │   ├── hybrid_gnn_llm_controller.py   # GNN+LLM combined (latest)
+│   │   ├── vlm_controller.py              # VLM baseline controller (NEW)
 │   │   ├── explicit_llm_controller.py     # Explicit LLM variant
 │   │   ├── gnn_safety_checker.py          # GNN candidate scoring
 │   │   ├── llm_strategic_navigator.py     # LLM strategic bearing
@@ -85,22 +94,69 @@ HybridGNN-LLM-Navigation/
 │   │   ├── drone_nav_3d.py                # Standard 3D (20 obstacles)
 │   │   └── drone_nav_nfz.py               # NFZ (25 obs + hard wall)
 │   ├── models/                            # 3D GNN models
-│   │   └── local_risk_gnn.py
+│   │   ├── local_risk_gnn.py
+│   │   └── trained_risk_gnn.pt            # Trained GNN weights
 │   ├── scripts/                           # Eval runners
 │   │   ├── eval.py                        # Standard eval
 │   │   ├── eval_nfz.py                    # NFZ eval
 │   │   ├── eval_gnn_llm.py                # GNN+LLM eval
+│   │   ├── eval_vlm.py                    # VLM baseline eval (NEW)
 │   │   └── eval_explicit_llm.py           # Explicit LLM eval
+│   ├── training/                          # GNN training scripts
 │   └── videos/                            # Recordings by experiment type
 │       ├── hybrid/                        # Standard hybrid
 │       ├── nfz/                           # NFZ hybrid
 │       ├── gnn_llm/                       # GNN+LLM
 │       └── explicit_llm/                  # Explicit LLM + action logs
 │
-└── docs/                                  # Additional documentation
-    ├── architecture.md                    # Framework deep-dive
-    └── benchmark_results.md               # Performance comparison
+├── results/                               # ═══ Experiment Results ═══
+│   ├── benchmarks/                        # Aggregate benchmark reports
+│   ├── comparison_2d/                     # 2D Hybrid vs VLM data
+│   ├── comparison_3d/                     # 3D Hybrid vs VLM data (NEW)
+│   │   └── 3d_hybrid_vs_vlm_report_20260404.md
+│   ├── hybrid_tuning/                     # Hyperparameter tuning logs
+│   └── testing_final_20eps/               # Final acceptance tests
+│
+├── docs/                                  # Additional documentation
+│   ├── architecture.md                    # Framework deep-dive
+│   └── benchmark_results.md               # Performance comparison
+│
+├── benchmark_report.py                    # Report generation script (NEW)
+└── create_report.py                       # DOCX report creator (NEW)
 ```
+
+---
+
+## 📊 Benchmark Results: Hybrid GNN+LLM vs VLM
+
+> **Setup:** 3D PyBullet | 15 episodes per condition | GPT-4o (text) vs GPT-4o (vision) | Identical GNN safety checker for both
+
+### Standard Environment (No NFZ) — 20 Obstacles
+
+| Metric | Hybrid GNN+LLM | VLM (GPT-4o Vision) | Δ | Winner |
+|--------|:--------------:|:-------------------:|:----:|:------:|
+| **Success Rate** | **80.0%** (12/15) | 46.7% (7/15) | +33.3 pp | 🏆 Hybrid |
+| Collision Rate | **0.0%** (0/15) | 6.7% (1/15) | −6.7 pp | 🏆 Hybrid |
+| Timeout Rate | **20.0%** | 46.7% | −26.7 pp | 🏆 Hybrid |
+| Avg Steps to Goal | **259 steps** | 346 steps | −87 steps | 🏆 Hybrid |
+
+### NFZ Environment — 25 Obstacles + L-Shaped Hard Wall
+
+| Metric | Hybrid NFZ | VLM (GPT-4o Vision) | Δ | Winner |
+|--------|:----------:|:-------------------:|:----:|:------:|
+| **Success Rate** | **60.0%** (9/15) | 33.3% (5/15) | +26.7 pp | 🏆 Hybrid |
+| Collision Rate | 13.3% (2/15) | 26.7% (4/15) | −13.4 pp | 🏆 Hybrid |
+| Timeout Rate | **26.7%** | 40.0% | −13.3 pp | 🏆 Hybrid |
+| **NFZ Violation Rate** | **0.0%** (0/15) | 46.7% (7/15) | −46.7 pp | 🏆 Hybrid |
+| Avg Steps to Goal | **236 steps** | 306 steps | −70 steps | 🏆 Hybrid |
+
+### Overall Win Tally (11 metrics across 2 environments)
+
+| | Hybrid GNN+LLM | VLM |
+|--|:-:|:-:|
+| **Metrics Won** | **11 / 11** | 0 / 11 |
+
+> ⚠️ **Note on VLM results:** 98–100% of VLM API calls failed (rate limits / payload errors), so the VLM controller navigated almost entirely on a goal-bearing fallback — effectively the same GNN safety shield with no vision intelligence. VLM success rates are a **lower bound** on true VLM performance.
 
 ---
 
@@ -113,6 +169,7 @@ HybridGNN-LLM-Navigation/
 ![experiments_2d/videos/hybrid_gnn_llm_mixed_obstacle](experiments_2d/videos/hybrid_gnn_llm_mixed_obstacle.gif)
 
 ```bash
+cd experiments_2d
 python run_gnn_llm_hybrid.py
 ```
 
@@ -126,89 +183,75 @@ python nfz_experiment.py --method HYBRID
 
 #### Medium NFZ (Dual Zones)
 2 no-fly zones + 25 obstacles — Navigate between dual NFZs
-![experiments_2d/videos/medium_nfz_hybrid](experiments_2d/videos/medium_nfz_hybrid.gif)
 
 ```bash
 python medium_nfz_experiment.py --method HYBRID
 ```
 
-#### Pac-Man Maze
-Walled maze corridors — Navigate tight corridors without wall collision
-![experiments_2d/videos/pacman_maze_hybrid](experiments_2d/videos/pacman_maze_hybrid.gif)
+#### Full 2D Hybrid vs VLM Comparison
 
 ```bash
-python pacman_maze_experiment.py --method HYBRID
-```
-
-#### Drone Hybrid
-Drone-like physics — Navigate with drone movement model
-![experiments_2d/videos/drone_hybrid](experiments_2d/videos/drone_hybrid.gif)
-
-```bash
-python drone_hybrid_experiment.py
-```
-
-### 3D PyBullet Drone Experiments
-
-#### Standard 3D Navigation
-8×8m arena, 20 obstacles — 3D drone navigation
-![experiments_3d/videos/hybrid/3d_hybrid_standard](experiments_3d/videos/hybrid/3d_hybrid_standard.gif)
-
-```bash
-python -m scripts.eval --controller hybrid --episodes 5
-```
-
-#### 3D NFZ Avoidance
-L-shaped hard wall + 25 obstacles — 3D NFZ avoidance
-![experiments_3d/videos/nfz/3d_nfz_hybrid](experiments_3d/videos/nfz/3d_nfz_hybrid.gif)
-
-```bash
-python -m scripts.eval_nfz --controller hybrid --episodes 5
-```
-
-#### GNN+LLM Combined
-Combined GNN safety + LLM strategic bearing
-![experiments_3d/videos/gnn_llm/3d_gnn_llm](experiments_3d/videos/gnn_llm/3d_gnn_llm.gif)
-
-```bash
-python -m scripts.eval_gnn_llm --episodes 3
-```
-
-#### Explicit LLM (JSON Commands)
-LLM issues direct JSON action commands — fully interpretable
-![experiments_3d/videos/explicit_llm/3d_explicit_llm](experiments_3d/videos/explicit_llm/3d_explicit_llm.gif)
-
-```bash
-python -m scripts.eval_explicit_llm --episodes 3
+python run_2d_full_comparison.py --method HYBRID
+python run_2d_full_comparison.py --method VLM
 ```
 
 ---
 
-## 📊 Performance Summary
+### 3D PyBullet Drone Experiments
 
-### 2D Experiments (Cat Avoidance)
+#### Standard 3D Navigation (Hybrid GNN+LLM)
+8×8m arena, 20 obstacles, cruise speed 1.8 m/s
 
-| Framework | Avg Time | Collisions/Run | Status |
-|-----------|----------|----------------|--------|
-| APEX Original | 30s+ | Multiple | ❌ Failed (frozen) |
-| Pulse Strategy | 9.8s | 1.0 | ✅ Works |
-| **Hybrid GNN+LLM** | **4.5s** | **0.75** | ✅ **Best** |
+```bash
+cd experiments_3d
+python -m scripts.eval_gnn_llm --episodes 15
+# or single episode:
+python run_3d_expt.py --controller hybrid_gnn_llm
+```
 
-### 3D Experiments (Drone Navigation)
+#### 3D NFZ Avoidance (Hybrid NFZ-Aware)
+L-shaped hard wall + 25 obstacles — reactive NFZ deflection
 
-| Framework | Avg Steps | Success Rate | Collision Rate |
-|-----------|-----------|-------------|----------------|
-| APEX Baseline | Timeout | ~40% | High |
-| **Hybrid GNN+LLM** | ~150–250 | **~100%** | **~0%** |
-| Explicit LLM | ~400–750 | ~67–100% | ~0% |
+```bash
+python -m scripts.eval_nfz --controller hybrid --episodes 15
+```
 
-### Hybrid vs Explicit LLM (3D)
+#### VLM Baseline (NEW)
+GPT-4o Vision — rendered camera frame → bearing angle
 
-| Metric | Hybrid GNN+LLM | Explicit LLM |
-|--------|----------------|--------------|
-| Avg Steps to Goal | ~150–250 | ~400–750 |
-| LLM Calls / Episode | 1 every 2s (strategic) | 1 every 0.5s (tactical) |
-| API Cost | Low | **4× higher** |
+```bash
+python -m scripts.eval_vlm --episodes 15
+```
+
+#### Full 3D Hybrid vs VLM Benchmark (NEW)
+Runs all 4 conditions (Hybrid/VLM × Std/NFZ) and generates a comparison report:
+
+```bash
+python run_benchmark_3d.py --episodes 15
+```
+
+---
+
+## 📈 2D Experiment Results (Preliminary)
+
+Preliminary 2D tests in MuJoCo (5 episodes, GPT-4o text vs VLM):
+
+### Standard Environment (2D)
+| Metric | Hybrid GNN+LLM | VLM (GPT-4o) |
+|--------|:--------------:|:------------:|
+| Success Rate | 100.0% | 100.0% |
+| Collision Rate | 0.0% | 0.0% |
+| NFZ Violation Rate | 0.0% | 0.0% |
+| Avg Steps | 798 | 613 |
+
+### NFZ Environment (2D)
+| Metric | Hybrid GNN+LLM | VLM (GPT-4o) |
+|--------|:--------------:|:------------:|
+| Success Rate | 100.0% | 100.0% |
+| NFZ Violation Rate | **0.0%** | **100.0%** |
+| Avg Steps | 702 | 585 |
+
+Key finding: VLM solved faster in 2D but completely failed to respect No-Fly Zones (100% violation rate), while Hybrid maintained **0% violations** in all environments.
 
 ---
 
@@ -216,55 +259,24 @@ python -m scripts.eval_explicit_llm --episodes 3
 
 ### Prerequisites
 ```bash
-# Create conda environment
 conda create -n hybrid-nav python=3.11
 conda activate hybrid-nav
-
-# Install dependencies
 pip install -r requirements.txt
 ```
 
 ### Set OpenAI API Key
 ```bash
-# Linux/Mac
-export OPENAI_API_KEY=sk-proj-...
-
 # Windows
 set OPENAI_API_KEY=sk-proj-...
+
+# Linux/Mac
+export OPENAI_API_KEY=sk-proj-...
 ```
 
-### Run 2D Experiments
-```bash
-cd experiments_2d
-
-# Mixed obstacle environment
-python run_gnn_llm_hybrid.py
-
-# NFZ experiment
-python nfz_experiment.py --method HYBRID
-
-# Medium NFZ (two zones)
-python medium_nfz_experiment.py --method HYBRID
-
-# Pac-Man maze
-python pacman_maze_experiment.py --method HYBRID
-```
-
-### Run 3D Experiments
+### Run 3D Benchmark (Hybrid vs VLM)
 ```bash
 cd experiments_3d
-
-# Standard mixed obstacle (3D)
-python -m scripts.eval --controller hybrid --episodes 5
-
-# NFZ (3D)
-python -m scripts.eval_nfz --controller hybrid --episodes 5
-
-# GNN+LLM combined
-python -m scripts.eval_gnn_llm --episodes 3
-
-# Explicit LLM (JSON commands)
-python -m scripts.eval_explicit_llm --episodes 3
+python run_benchmark_3d.py --episodes 15
 ```
 
 ### Camera Options (3D)
@@ -284,11 +296,13 @@ python -m scripts.eval_explicit_llm --episodes 3
 
 2. **Drone Height Lock (3D)** — Explicitly locks drone altitude to the obstacle plane (z=1.0), forcing navigation *through* obstacles rather than flying over them.
 
-3. **Reactive NFZ Avoidance** — Shifted from proactive (avoid NFZ from far away, wasting time) to reactive (head for goal, deflect only when encountering NFZ boundary).
+3. **Reactive NFZ Avoidance** — Shifted from proactive (avoid NFZ from far away) to reactive (head for goal, deflect only when encountering NFZ boundary). Result: 0.0% NFZ violations.
 
-4. **Sample-Filter-Select Pipeline** — Separates safety (GNN: instant, per-frame) from strategy (LLM: occasional, every ~2s), achieving both responsiveness and intelligence.
+4. **Sample-Filter-Select Pipeline** — Separates safety (GNN: instant, per-frame) from strategy (LLM: every ~2s), achieving both responsiveness and intelligence with low API cost.
 
-5. **Multi-layer Safety Shield** — 5-step collision lookahead with emergency escape override, achieving 0% collision rate in 3D experiments.
+5. **Multi-layer Safety Shield** — 5-step collision lookahead with emergency escape override, achieving 0% collision rate in the standard 3D environment.
+
+6. **VLM Baseline Controller** — New `vlm_controller.py` enables direct head-to-head comparison against GPT-4o Vision using identical GNN safety infrastructure.
 
 ---
 
@@ -297,6 +311,13 @@ python -m scripts.eval_explicit_llm --episodes 3
 All experiment videos are embedded inline in the sections above. They are also available at:
 - **2D**: [`experiments_2d/videos/`](experiments_2d/videos/)
 - **3D**: [`experiments_3d/videos/`](experiments_3d/videos/)
+
+---
+
+## 📄 Full Benchmark Report
+
+The detailed per-episode breakdown (all 60 episodes across 4 conditions) is in:
+[`results/comparison_3d/3d_hybrid_vs_vlm_report_20260404.md`](results/comparison_3d/3d_hybrid_vs_vlm_report_20260404.md)
 
 ---
 

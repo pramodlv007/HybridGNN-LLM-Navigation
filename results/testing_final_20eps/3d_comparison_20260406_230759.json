@@ -1,0 +1,75 @@
+{
+  "generated": "2026-04-06T23:07:59.050909",
+  "no_nfz": {
+    "hybrid": {
+      "method": "Hybrid_GNN_LLM",
+      "episodes": 20,
+      "successes": 16,
+      "collisions": 2,
+      "timeouts": 2,
+      "nfz_violations": 0,
+      "success_rate": 0.8,
+      "collision_rate": 0.1,
+      "timeout_rate": 0.1,
+      "nfz_violation_rate": 0.0,
+      "avg_steps_all": 289.55,
+      "avg_steps_succ": 272.9375,
+      "avg_final_dist": 1.326995063533215,
+      "min_obs_dist": 0.26942521348014137
+    },
+    "vlm": {
+      "method": "VLM",
+      "episodes": 20,
+      "successes": 10,
+      "collisions": 2,
+      "timeouts": 8,
+      "nfz_violations": 0,
+      "success_rate": 0.5,
+      "collision_rate": 0.1,
+      "timeout_rate": 0.4,
+      "nfz_violation_rate": 0.0,
+      "avg_steps_all": 382.55,
+      "avg_steps_succ": 276.2,
+      "avg_final_dist": 3.362897325820691,
+      "min_obs_dist": 0.24073897584581405,
+      "vlm_calls": 0,
+      "vlm_failures": 0
+    }
+  },
+  "nfz": {
+    "hybrid": {
+      "method": "Hybrid_NFZ",
+      "episodes": 20,
+      "successes": 6,
+      "collisions": 6,
+      "timeouts": 8,
+      "nfz_violations": 3,
+      "success_rate": 0.3,
+      "collision_rate": 0.3,
+      "timeout_rate": 0.4,
+      "nfz_violation_rate": 0.15,
+      "avg_steps_all": 349.8,
+      "avg_steps_succ": 331.0,
+      "avg_final_dist": 5.161910667237997,
+      "min_obs_dist": 0.16524542448957588
+    },
+    "vlm": {
+      "method": "VLM_NFZ",
+      "episodes": 20,
+      "successes": 3,
+      "collisions": 4,
+      "timeouts": 13,
+      "nfz_violations": 6,
+      "success_rate": 0.15,
+      "collision_rate": 0.2,
+      "timeout_rate": 0.65,
+      "nfz_violation_rate": 0.3,
+      "avg_steps_all": 442.4,
+      "avg_steps_succ": 364.6666666666667,
+      "avg_final_dist": 4.788493398247222,
+      "min_obs_dist": 0.21501144630159125,
+      "vlm_calls": 0,
+      "vlm_failures": 0
+    }
+  }
+}

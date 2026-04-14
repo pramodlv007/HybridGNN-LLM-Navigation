@@ -310,8 +310,8 @@ def run_apex_method(physical_model, data, renderer, fps, dt, max_steps):
             current_action = action_sequence[action_index]
             if not isinstance(current_action, dict):
                 return
-            frames_left = int(current_action["duration"] * fps)
-            vel = current_action["velocity"]
+            frames_left = int(current_action.get("duration", 1.0) * fps)
+            vel = current_action.get("velocity", [0.0, 0.0, 0.0])
             robot_state = get_body_state(physical_model, data, "robot")
             robot_pos = np.array(robot_state["position"][:3])
             if would_enter_nfz(robot_pos, vel):
@@ -394,10 +394,10 @@ def run_apex_method(physical_model, data, renderer, fps, dt, max_steps):
                 action_index += 1
                 current_action = action_sequence[action_index]
                 if isinstance(current_action, dict):
-                    frames_left = int(current_action["duration"] * fps)
+                    frames_left = int(current_action.get("duration", 1.0) * fps)
             
             if isinstance(current_action, dict):
-                vel = current_action["velocity"]
+                vel = current_action.get("velocity", [0.0, 0.0, 0.0])
                 robot_pos_3d = np.array(robot_state["position"][:3])
                 if would_enter_nfz(robot_pos_3d, vel):
                     repulsion = combined_nfz_repulsion(robot_pos_3d)

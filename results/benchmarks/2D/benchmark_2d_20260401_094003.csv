@@ -1,0 +1,7 @@
+method,episode,status,steps,time,collision,nfz_violated,success
+APEX,1,TIMEOUT,2999,29.99,0,0,0
+APEX,2,COLLISION,2999,29.99,1,0,0
+APEX,3,TIMEOUT,2999,29.99,0,0,0
+LLM_Only,1,TIMEOUT,2999,29.99,0,0,0
+LLM_Only,2,COLLISION,2999,29.99,1,0,0
+LLM_Only,3,TIMEOUT,2999,29.99,0,0,0

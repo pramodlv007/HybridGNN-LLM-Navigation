@@ -1,0 +1,5 @@
+method,env,episodes,success_rate,collision_rate,timeout_rate,nfz_violation_rate,avg_steps_all,avg_steps_succ,avg_final_dist,min_obs_dist
+hybrid,no_nfz,20,55.0,25.0,20.0,0.0,348.4,332.3,2.616,0.234
+vlm,no_nfz,20,35.0,15.0,50.0,0.0,471.1,364.1,3.315,0.249
+hybrid,nfz,20,55.0,30.0,15.0,15.0,336.1,374.8,3.002,0.163
+vlm,nfz,20,35.0,30.0,35.0,30.0,446.4,402.1,4.083,0.202
