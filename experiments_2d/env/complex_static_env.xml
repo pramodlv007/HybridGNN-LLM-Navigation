@@ -1,0 +1,108 @@
+<mujoco>
+  <option gravity="0 0 -50" integrator="RK4" timestep="0.01"/>
+  <visual><map znear="0.01"/></visual>
+
+  <asset>
+    <texture name="grid" type="2d" builtin="checker" width="512" height="512"
+             rgb1="0.8 0.8 0.8" rgb2="1 1 1"/>
+    <material name="grid_mat" texture="grid" texrepeat="10 10" reflectance="0.2"/>
+  </asset>
+
+  <default>
+    <!-- General contact tuning -->
+    <geom friction="1 0.01 0.001" solref="0.02 1" solimp="0.9 0.95 0.001"/>
+
+    <!-- Reusable styling for start/goal markers -->
+    <site type="sphere" size="0.08"/>
+
+    <!-- Reusable styling for dot obstacles -->
+    <default class="dot">
+      <geom type="sphere" size="0.06" rgba="0.15 0.2 0.8 1"/>
+    </default>
+  </default>
+
+  <worldbody>
+    <camera name="top" pos="0 0 10" xyaxes="1 0 0 0 1 0"/>
+
+    <!-- Floor + walls -->
+    <geom name="floor" type="plane" size="5 5 0.1" material="grid_mat" rgba="1 1 1 1"/>
+    <geom name="wall_left"  type="box" pos="-4 0 0.1" size="0.1 5 0.5" rgba="0.6 0.6 0.6 1"/>
+    <geom name="wall_right" type="box" pos="4 0 0.1"  size="0.1 5 0.5" rgba="0.6 0.6 0.6 1"/>
+    <geom name="wall_top"   type="box" pos="0 4 0.1"  size="5 0.1 0.5" rgba="0.6 0.6 0.6 1"/>
+    <geom name="wall_bot"   type="box" pos="0 -4 0.1" size="5 0.1 0.5" rgba="0.6 0.6 0.6 1"/>
+
+    <!-- Big obstacles (kept from original) -->
+    <geom name="obstacle1" type="box" pos="0.5 1.5 0.1"  size="0.3 0.6 0.2" rgba="0.7 0.3 0.3 1"/>
+    <geom name="obstacle2" type="box" pos="-1.0 -1.5 0.1" size="0.4 0.5 0.2" rgba="0.7 0.3 0.3 1"/>
+    <geom name="obstacle3" type="box" pos="1.8 -1.0 0.1"  size="0.3 0.5 0.2" rgba="0.7 0.3 0.3 1"/>
+
+    <!-- Start/Goal markers (non-colliding, just visual) -->
+    <site name="start" pos="-3.6 -3.6 0.02" rgba="0 1 0 1"/>
+    <site name="goal"  pos=" 3.6  3.6 0.02" rgba="1 0.85 0 1"/>
+
+    <!-- Static collidable dots (geoms directly in worldbody = static obstacles) -->
+    <!-- Upper-left -->
+    <geom name="dot01" class="dot" pos="-3.2  3.1 0.06"/>
+    <geom name="dot02" class="dot" pos="-2.6  2.8 0.06"/>
+    <geom name="dot03" class="dot" pos="-3.5  2.2 0.06"/>
+    <geom name="dot04" class="dot" pos="-2.9  2.0 0.06"/>
+    <geom name="dot05" class="dot" pos="-2.2  3.4 0.06"/>
+
+    <!-- Upper-mid / upper-right -->
+    <geom name="dot06" class="dot" pos="-1.6  3.2 0.06"/>
+    <geom name="dot07" class="dot" pos="-0.8  2.6 0.06"/>
+    <geom name="dot08" class="dot" pos=" 0.2  3.5 0.06"/>
+    <geom name="dot09" class="dot" pos=" 1.0  2.9 0.06"/>
+    <geom name="dot10" class="dot" pos=" 2.4  3.3 0.06"/>
+    <geom name="dot11" class="dot" pos=" 3.3  2.6 0.06"/>
+
+    <!-- Mid band -->
+    <geom name="dot12" class="dot" pos="-3.3  1.0 0.06"/>
+    <geom name="dot13" class="dot" pos="-2.4  1.3 0.06"/>
+    <geom name="dot14" class="dot" pos="-1.7  1.0 0.06"/>
+    <geom name="dot15" class="dot" pos="-0.9  1.4 0.06"/>
+    <geom name="dot16" class="dot" pos=" 0.0  1.1 0.06"/>
+    <geom name="dot17" class="dot" pos=" 1.2  1.2 0.06"/>
+    <geom name="dot18" class="dot" pos=" 2.0  0.9 0.06"/>
+    <geom name="dot19" class="dot" pos=" 3.1  1.1 0.06"/>
+
+    <!-- Center-ish -->
+    <geom name="dot20" class="dot" pos="-2.0  0.2 0.06"/>
+    <geom name="dot21" class="dot" pos="-1.2 -0.2 0.06"/>
+    <geom name="dot22" class="dot" pos="-0.4  0.4 0.06"/>
+    <geom name="dot23" class="dot" pos=" 0.4 -0.1 0.06"/>
+    <geom name="dot24" class="dot" pos=" 1.1  0.3 0.06"/>
+    <geom name="dot25" class="dot" pos=" 2.0  0.1 0.06"/>
+    <geom name="dot26" class="dot" pos=" 3.2 -0.3 0.06"/>
+
+    <!-- Lower band -->
+    <geom name="dot27" class="dot" pos="-3.1 -1.0 0.06"/>
+    <geom name="dot28" class="dot" pos="-2.3 -0.9 0.06"/>
+    <geom name="dot29" class="dot" pos="-1.5 -1.2 0.06"/>
+    <geom name="dot30" class="dot" pos="-0.6 -1.0 0.06"/>
+    <geom name="dot31" class="dot" pos=" 0.3 -1.4 0.06"/>
+    <geom name="dot32" class="dot" pos=" 1.4 -1.1 0.06"/>
+    <geom name="dot33" class="dot" pos=" 2.4 -1.4 0.06"/>
+    <geom name="dot34" class="dot" pos=" 3.3 -1.1 0.06"/>
+
+    <!-- Lower-left / lower-right -->
+    <geom name="dot35" class="dot" pos="-3.4 -2.6 0.06"/>
+    <geom name="dot36" class="dot" pos="-2.6 -3.2 0.06"/>
+    <geom name="dot37" class="dot" pos="-1.7 -2.8 0.06"/>
+    <geom name="dot38" class="dot" pos=" 1.8 -3.2 0.06"/>
+    <geom name="dot39" class="dot" pos=" 2.7 -2.6 0.06"/>
+    <geom name="dot40" class="dot" pos=" 3.4 -3.3 0.06"/>
+
+    <!-- Robot: planar mobility -->
+    <body name="robot" pos="-3.6 -3.6 0.12">
+      <!-- 
+        Standard free joint for APEX compatibility. 
+        Original XML used slide/slide/hinge, but APEX logic expects freejoint (or qvel[0:3] mapping). 
+        To minimize code changes, we stick to freejoint so 'robot' state has 7-dim pos and 6-dim vel structure 
+        expected by get_body_state utility.
+      -->
+      <freejoint/>
+      <geom name="robot_geom" type="sphere" size="0.12" rgba="0 1 0 1"/>
+    </body>
+  </worldbody>
+</mujoco>

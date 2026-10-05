@@ -1,0 +1,110 @@
+<mujoco>
+  <option gravity="0 0 -50" integrator="RK4" timestep="0.01"/>
+  <visual><map znear="0.01"/></visual>
+
+  <asset>
+    <texture name="grid" type="2d" builtin="checker" width="512" height="512"
+             rgb1="0.05 0.05 0.15" rgb2="0.08 0.08 0.2"/>
+    <material name="grid_mat" texture="grid" texrepeat="10 10" reflectance="0.1"/>
+    <material name="wall_mat" rgba="0.15 0.15 0.6 1"/>
+    <material name="ghost_mat" rgba="1.0 0.2 0.2 1"/>
+    <material name="dot_mat" rgba="0.2 0.3 0.9 1"/>
+  </asset>
+
+  <default>
+    <geom friction="1 0.01 0.001" solref="0.02 1" solimp="0.9 0.95 0.001"/>
+    <site type="sphere" size="0.08"/>
+    <default class="dynamic">
+      <geom type="sphere" size="0.12" rgba="1 0.2 0.2 1"/>
+    </default>
+    <default class="static">
+      <geom type="sphere" size="0.08" rgba="0.2 0.3 0.9 1"/>
+    </default>
+  </default>
+
+  <worldbody>
+    <camera name="top" pos="0 0 12" xyaxes="1 0 0 0 1 0"/>
+
+    <!-- Floor -->
+    <geom name="floor" type="plane" size="5 5 0.1" material="grid_mat"/>
+
+    <!-- ======================================== -->
+    <!-- OUTER BOUNDARY WALLS                     -->
+    <!-- ======================================== -->
+    <geom name="wall_left"  type="box" pos="-4 0 0.15" size="0.1 4.1 0.3" material="wall_mat"/>
+    <geom name="wall_right" type="box" pos=" 4 0 0.15" size="0.1 4.1 0.3" material="wall_mat"/>
+    <geom name="wall_top"   type="box" pos="0 4 0.15"  size="4.1 0.1 0.3" material="wall_mat"/>
+    <geom name="wall_bot"   type="box" pos="0 -4 0.15" size="4.1 0.1 0.3" material="wall_mat"/>
+
+    <!-- ======================================== -->
+    <!-- MAZE INTERIOR WALLS                      -->
+    <!-- Designed with clear corridors from       -->
+    <!-- start (-3.6,-3.6) to goal (3.6,3.6)      -->
+    <!-- ======================================== -->
+
+    <!-- Central T-junction block -->
+    <geom name="maze_c1" type="box" pos="0 0 0.15" size="1.0 0.1 0.3" material="wall_mat"/>
+    <geom name="maze_c2" type="box" pos="0 0.6 0.15" size="0.1 0.5 0.3" material="wall_mat"/>
+
+    <!-- Bottom-left quadrant -->
+    <geom name="maze_bl1" type="box" pos="-2.5 -2.5 0.15" size="0.1 1.0 0.3" material="wall_mat"/>
+    <geom name="maze_bl2" type="box" pos="-1.5 -1.5 0.15" size="1.0 0.1 0.3" material="wall_mat"/>
+
+    <!-- Bottom-right quadrant -->
+    <geom name="maze_br1" type="box" pos="2.5 -2.5 0.15" size="0.1 1.0 0.3" material="wall_mat"/>
+    <geom name="maze_br2" type="box" pos="1.5 -1.5 0.15" size="1.0 0.1 0.3" material="wall_mat"/>
+
+    <!-- Top-left quadrant -->
+    <geom name="maze_tl1" type="box" pos="-2.5 2.5 0.15" size="0.1 1.0 0.3" material="wall_mat"/>
+    <geom name="maze_tl2" type="box" pos="-1.5 1.5 0.15" size="1.0 0.1 0.3" material="wall_mat"/>
+
+    <!-- Top-right quadrant -->
+    <geom name="maze_tr1" type="box" pos="2.5 2.5 0.15" size="0.1 1.0 0.3" material="wall_mat"/>
+    <geom name="maze_tr2" type="box" pos="1.5 1.5 0.15" size="1.0 0.1 0.3" material="wall_mat"/>
+
+    <!-- Mid horizontal corridors -->
+    <geom name="maze_mh1" type="box" pos="-3.0  0 0.15" size="0.6 0.1 0.3" material="wall_mat"/>
+    <geom name="maze_mh2" type="box" pos=" 3.0  0 0.15" size="0.6 0.1 0.3" material="wall_mat"/>
+
+    <!-- Mid vertical corridors -->
+    <geom name="maze_mv1" type="box" pos="0 -2.5 0.15" size="0.1 0.8 0.3" material="wall_mat"/>
+    <geom name="maze_mv2" type="box" pos="0  2.5 0.15" size="0.1 0.8 0.3" material="wall_mat"/>
+
+    <!-- ======================================== -->
+    <!-- Start / Goal Markers                     -->
+    <!-- ======================================== -->
+    <site name="start" pos="-3.6 -3.6 0.02" rgba="0 1 0 1"/>
+    <site name="goal"  pos=" 3.6  3.6 0.02" rgba="1 0.85 0 1"/>
+
+    <!-- ======================================== -->
+    <!-- DYNAMIC Obstacles (cat1-cat6) - Ghosts   -->
+    <!-- ======================================== -->
+    <body name="cat1" pos="-1.0 -3.0 0.12"><freejoint/><geom class="dynamic"/></body>
+    <body name="cat2" pos=" 1.0 -2.0 0.12"><freejoint/><geom class="dynamic"/></body>
+    <body name="cat3" pos="-1.0  2.0 0.12"><freejoint/><geom class="dynamic"/></body>
+    <body name="cat4" pos=" 1.0  3.0 0.12"><freejoint/><geom class="dynamic"/></body>
+    <body name="cat5" pos=" 3.0  0.0 0.12"><freejoint/><geom class="dynamic"/></body>
+    <body name="cat6" pos="-3.0  0.0 0.12"><freejoint/><geom class="dynamic"/></body>
+
+    <!-- ======================================== -->
+    <!-- STATIC Obstacles (cat7-cat15) - Dots     -->
+    <!-- ======================================== -->
+    <body name="cat7"  pos="-2.0 -0.5 0.08"><freejoint/><geom class="static"/></body>
+    <body name="cat8"  pos=" 2.0  0.5 0.08"><freejoint/><geom class="static"/></body>
+    <body name="cat9"  pos="-0.5  1.0 0.08"><freejoint/><geom class="static"/></body>
+    <body name="cat10" pos=" 0.5 -1.0 0.08"><freejoint/><geom class="static"/></body>
+    <body name="cat11" pos="-3.0  2.0 0.08"><freejoint/><geom class="static"/></body>
+    <body name="cat12" pos=" 3.0 -2.0 0.08"><freejoint/><geom class="static"/></body>
+    <body name="cat13" pos="-1.5  3.0 0.08"><freejoint/><geom class="static"/></body>
+    <body name="cat14" pos=" 1.5 -3.0 0.08"><freejoint/><geom class="static"/></body>
+    <body name="cat15" pos=" 0.0  0.0 0.08"><freejoint/><geom class="static"/></body>
+
+    <!-- ======================================== -->
+    <!-- Robot                                    -->
+    <!-- ======================================== -->
+    <body name="robot" pos="-3.6 -3.6 0.12">
+      <freejoint/>
+      <geom name="robot_geom" type="sphere" size="0.12" rgba="1 1 0 1"/>
+    </body>
+  </worldbody>
+</mujoco>

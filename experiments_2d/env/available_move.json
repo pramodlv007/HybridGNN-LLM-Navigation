@@ -1,0 +1,47 @@
+{
+    "move_north": {
+        "velocity": [0.0, 2.0, 0.0],
+        "duration": 0.5,
+        "description": "Move north (positive Y) at speed 2.0 for 0.5s"
+    },
+    "move_south": {
+        "velocity": [0.0, -2.0, 0.0],
+        "duration": 0.5,
+        "description": "Move south (negative Y) at speed 2.0 for 0.5s"
+    },
+    "move_east": {
+        "velocity": [2.0, 0.0, 0.0],
+        "duration": 0.5,
+        "description": "Move east (positive X) at speed 2.0 for 0.5s"
+    },
+    "move_west": {
+        "velocity": [-2.0, 0.0, 0.0],
+        "duration": 0.5,
+        "description": "Move west (negative X) at speed 2.0 for 0.5s"
+    },
+    "move_northeast": {
+        "velocity": [1.414, 1.414, 0.0],
+        "duration": 0.5,
+        "description": "Move northeast (diagonal) at speed 2.0 for 0.5s"
+    },
+    "move_northwest": {
+        "velocity": [-1.414, 1.414, 0.0],
+        "duration": 0.5,
+        "description": "Move northwest (diagonal) at speed 2.0 for 0.5s"
+    },
+    "move_southeast": {
+        "velocity": [1.414, -1.414, 0.0],
+        "duration": 0.5,
+        "description": "Move southeast (diagonal) at speed 2.0 for 0.5s"
+    },
+    "move_southwest": {
+        "velocity": [-1.414, -1.414, 0.0],
+        "duration": 0.5,
+        "description": "Move southwest (diagonal) at speed 2.0 for 0.5s"
+    },
+    "stay": {
+        "velocity": [0.0, 0.0, 0.0],
+        "duration": 0.5,
+        "description": "Stay in place (zero velocity) for 0.5s"
+    }
+}

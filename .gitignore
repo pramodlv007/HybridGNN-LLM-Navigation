@@ -5,11 +5,14 @@ __pycache__/
 *.so
 
 # Virtual environments
-venv/
-env/
+/venv/
+/env/
 .env
+!experiments_2d/env/*.xml
+!experiments_2d/env/*.json
 
 # IDE
+.claude/
 .vscode/
 .idea/
 *.swp

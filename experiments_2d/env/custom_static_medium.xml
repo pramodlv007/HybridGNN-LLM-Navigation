@@ -1,0 +1,62 @@
+<mujoco>
+  <option gravity="0 0 -50" integrator="RK4" timestep="0.01"/>
+  <visual><map znear="0.01"/></visual>
+
+  <asset>
+    <texture name="grid" type="2d" builtin="checker" width="512" height="512"
+             rgb1="0.8 0.8 0.8" rgb2="1 1 1"/>
+    <material name="grid_mat" texture="grid" texrepeat="10 10" reflectance="0.2"/>
+  </asset>
+
+  <default>
+    <geom friction="1 0.01 0.001" solref="0.02 1" solimp="0.9 0.95 0.001"/>
+    <site type="sphere" size="0.08"/>
+    <default class="dot">
+      <geom type="sphere" size="0.08" rgba="0.15 0.2 0.8 1"/>
+    </default>
+  </default>
+
+  <worldbody>
+    <camera name="top" pos="0 0 10" xyaxes="1 0 0 0 1 0"/>
+
+    <!-- Floor + walls -->
+    <geom name="floor" type="plane" size="5 5 0.1" material="grid_mat" rgba="1 1 1 1"/>
+    <geom name="wall_left"  type="box" pos="-4 0 0.1" size="0.1 5 0.5" rgba="0.6 0.6 0.6 1"/>
+    <geom name="wall_right" type="box" pos="4 0 0.1"  size="0.1 5 0.5" rgba="0.6 0.6 0.6 1"/>
+    <geom name="wall_top"   type="box" pos="0 4 0.1"  size="5 0.1 0.5" rgba="0.6 0.6 0.6 1"/>
+    <geom name="wall_bot"   type="box" pos="0 -4 0.1" size="5 0.1 0.5" rgba="0.6 0.6 0.6 1"/>
+
+    <!-- Start/Goal markers -->
+    <site name="start" pos="-3.6 -3.6 0.02" rgba="0 1 0 1"/>
+    <site name="goal"  pos=" 3.6  3.6 0.02" rgba="1 0.85 0 1"/>
+
+    <!-- 20 Static obstacle bodies (MEDIUM difficulty) -->
+    <!-- Spread across the arena with good spacing -->
+    <body name="cat1" pos="-2.5 -2.0 0.08"><geom class="dot"/></body>
+    <body name="cat2" pos="-1.5 -2.5 0.08"><geom class="dot"/></body>
+    <body name="cat3" pos="-0.5 -1.8 0.08"><geom class="dot"/></body>
+    <body name="cat4" pos="0.5 -2.2 0.08"><geom class="dot"/></body>
+    <body name="cat5" pos="1.5 -1.5 0.08"><geom class="dot"/></body>
+    <body name="cat6" pos="2.5 -2.0 0.08"><geom class="dot"/></body>
+    <body name="cat7" pos="-2.0 -0.5 0.08"><geom class="dot"/></body>
+    <body name="cat8" pos="-1.0 0.0 0.08"><geom class="dot"/></body>
+    <body name="cat9" pos="0.0 -0.5 0.08"><geom class="dot"/></body>
+    <body name="cat10" pos="1.0 0.5 0.08"><geom class="dot"/></body>
+    <body name="cat11" pos="2.0 0.0 0.08"><geom class="dot"/></body>
+    <body name="cat12" pos="-2.5 1.5 0.08"><geom class="dot"/></body>
+    <body name="cat13" pos="-1.5 1.0 0.08"><geom class="dot"/></body>
+    <body name="cat14" pos="-0.5 1.5 0.08"><geom class="dot"/></body>
+    <body name="cat15" pos="0.5 2.0 0.08"><geom class="dot"/></body>
+    <body name="cat16" pos="1.5 1.5 0.08"><geom class="dot"/></body>
+    <body name="cat17" pos="2.5 1.0 0.08"><geom class="dot"/></body>
+    <body name="cat18" pos="-1.0 2.5 0.08"><geom class="dot"/></body>
+    <body name="cat19" pos="1.0 2.8 0.08"><geom class="dot"/></body>
+    <body name="cat20" pos="2.8 2.5 0.08"><geom class="dot"/></body>
+
+    <!-- Robot with freejoint -->
+    <body name="robot" pos="-3.6 -3.6 0.12">
+      <freejoint/>
+      <geom name="robot_geom" type="sphere" size="0.12" rgba="0 1 0 1"/>
+    </body>
+  </worldbody>
+</mujoco>
